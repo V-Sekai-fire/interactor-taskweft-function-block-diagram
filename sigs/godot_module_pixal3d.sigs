@@ -1,0 +1,21 @@
+# Godot module pixal3d — image-to-mesh through trellis2, exposed to the
+# scene tree as `Pixal3DModel : Resource`. Source of truth is the module
+# itself on `V-Sekai-fire/entities-godot@feat/module-pixal3d` under
+# `modules/pixal3d/`, wrapping the pixal3d C ABI at
+# `thirdparty/pixal3d/trellis2_capi.h` (ABI version 9 at the time of
+# this file).
+#
+# Rung 0: what the RFD 2251 rung 1 emitter needs — one call, image
+# bytes in and GLB bytes out. Rung 1 will add pipeline residency
+# (a Pixal3DPipeline resource that holds t2_pipeline across calls
+# so a batch of parts does not reload the model per invocation).
+#
+# Format matches the other .sigs files in this directory:
+# `<Namespace>::<Class>.<method>(<args>) -> <return>`.
+# Static factories start with `<Class>::` (no receiver).
+
+#
+# index-only: the module's binding is `ClassDB::bind_method(D_METHOD("image_to_glb", "image_bytes", "opts"), &Pixal3DModel::image_to_glb)` and a Godot caller reaches it as `Pixal3DModel.image_to_glb(bytes, opts)`
+
+Pixal3DModel.get_abi_version() -> int
+Pixal3DModel.image_to_glb(image_bytes, opts) -> PackedByteArray

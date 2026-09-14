@@ -1,0 +1,23 @@
+# Godot module skin-tokens — auto-rigging through the skin-tokens
+# generative model, exposed to the scene tree as
+# `SkinTokensModel : Resource`. Source of truth is the module on
+# `V-Sekai-fire/entities-godot@feat/module-skin-tokens` under
+# `modules/skin_tokens/`, wrapping the skin-tokens C ABI at
+# `thirdparty/skin_tokens/include/skintokens/skintokens.h`
+# (ST_ABI_VERSION 1 at the time of this file).
+#
+# Rung 0: what the RFD 2251 rung 2 emitter needs — one call, file
+# paths in and a status code out. Rung 1 will add pipeline residency
+# (an StModel resource that holds the loaded weights across rig calls
+# so a batch of parts does not reload per invocation) plus the split
+# `st_skin_files` / `st_bind_glb_files` methods.
+#
+# Format matches the other .sigs files in this directory:
+# `<Namespace>::<Class>.<method>(<args>) -> <return>`.
+
+#
+# index-only: the module's binding is `ClassDB::bind_method(D_METHOD("rig_file", "bundle_path", "mesh_path", "output_path", "opts"), &SkinTokensModel::rig_file)` and a Godot caller reaches it as `SkinTokensModel.rig_file(bundle_path, mesh_path, output_path, opts)`
+
+SkinTokensModel.get_abi_version() -> int
+SkinTokensModel.get_status_string(status) -> String
+SkinTokensModel.rig_file(bundle_path, mesh_path, output_path, opts) -> int

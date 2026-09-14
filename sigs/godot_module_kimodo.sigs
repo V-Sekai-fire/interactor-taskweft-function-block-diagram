@@ -1,0 +1,18 @@
+# Godot module kimodo — text-to-motion through kimodo's diffusion
+# denoiser, exposed to the scene tree as `KimodoModel : Resource`.
+# Source of truth is the module on
+# `V-Sekai-fire/entities-godot@feat/module-kimodo` under
+# `modules/kimodo/`, wrapping the kimodo C ABI at
+# `thirdparty/kimodo/include/kimodo/kimodo_capi.h`.
+#
+# Rung 0: what the RFD 2251 rung 3 emitter needs — one call, three
+# GGUFs plus a prompt in and a motion Dictionary out. Rung 1 will
+# add a KimodoPipeline residency resource plus the constraint-aware
+# generate variant.
+
+#
+# index-only: the module's binding is `ClassDB::bind_method(D_METHOD("generate_motion", "motion_gguf", "text_gguf", "text_adapter_gguf", "prompt", "opts"), &KimodoModel::generate_motion)` and a Godot caller reaches it as `KimodoModel.generate_motion(motion_gguf, text_gguf, text_adapter_gguf, prompt, opts)`
+
+KimodoModel.get_abi_version() -> int
+KimodoModel.get_status_string(status) -> String
+KimodoModel.generate_motion(motion_gguf, text_gguf, text_adapter_gguf, prompt, opts) -> Dictionary

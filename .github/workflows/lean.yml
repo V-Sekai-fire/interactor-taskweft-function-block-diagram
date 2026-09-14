@@ -84,7 +84,7 @@ jobs:
             echo "a table-less directory accepted the CALL; the flag is decoration"; exit 1
           fi
           # every table under sigs/ either parses or says once that it is an index
-          "$B" --sigs sigs export-tables | grep -q '"total": 318'
+          "$B" --sigs sigs export-tables | grep -q '"total": 321'
       - name: A CALL block is checked against the signature tables, lowers to a call step, and lifts back
         run: |
           B=./.lake/build/bin/taskweft_fbd_compiler

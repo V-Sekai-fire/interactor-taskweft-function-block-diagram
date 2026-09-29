@@ -49,6 +49,6 @@ not appear in the corresponding generated header, and refuses a
 generator run whose header omits a rung-0 entry the `.sigs` names.
 
 **Trademark note.** The two world-VM files describe their surface
-generically, in their names and prose, not by the platform's mark. Extern and type strings a
-runtime binds stay verbatim, because they are data the target
-matches byte for byte.
+generically, in their names and prose, not by the platform's mark.
+Extern and type strings a runtime binds stay verbatim, because they
+are data the target matches byte for byte.

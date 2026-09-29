@@ -21,7 +21,7 @@ Files here today:
 | file                             | rung | source                                                                       |
 | -------------------------------- | ---- | ---------------------------------------------------------------------------- |
 | `godot_sandbox_syscalls.sigs`    | full | libriscv/godot-sandbox `src/syscalls.h` (MIT)                                |
-| `vrchat_udon_asm.sigs`           | full | vrchat-community/UdonSharp `AssemblyInstruction.cs` + `AssemblyModule.cs` (MIT) |
+| `world_vm_asm.sigs`              | full | vrchat-community/UdonSharp `AssemblyInstruction.cs` + `AssemblyModule.cs` (MIT) |
 | `godot_engine_single.sigs`       | 0 index | **not** the source of truth — Sandbox's `generate_api("cpp",...)` is; run `mix godot.dump_api` |
 | `godot_engine_double.sigs`       | 0 index | same, double-precision `real_t` sibling                                       |
 | `udon_extern.sigs`               | 0    | vrchat-community/UdonSharp extern resolver + UdonManager runtime (MIT)        |

@@ -1,16 +1,15 @@
-# VRChat Udon assembly (`uasm`) surface area.
+# Social VR world-scripting VM assembly surface area.
 #
-# The full instruction set + directives an Udon assembler accepts.
-# Extracted from UdonSharp's own assembly emitter (MIT,
-# vrchat-community/UdonSharp @ HEAD, Aug 2026):
-#   Packages/com.vrchat.UdonSharp/Editor/Compiler/Assembly/
-#     AssemblyInstruction.cs    (opcodes)
-#     AssemblyModule.cs         (directives, section markers)
+# The full instruction set + directives the VM's assembler accepts.
+# Extracted from the platform's MIT-licensed C#-to-VM compiler, its
+# assembly emitter at HEAD, Aug 2026:
+#   AssemblyInstruction.cs    (opcodes)
+#   AssemblyModule.cs         (directives, section markers)
 #
-# This is the target for RFD 2148 stage 1 (FBD -> Udon assembly,
+# This is the target for RFD 2148 stage 1 (FBD -> VM assembly,
 # bypassing C# per the BLOCKLIST row on C#-as-an-FBD-intermediate).
-# The compiler emits one .uasm file per POU; VRChat SDK's Udon
-# assembler compiles that to Udon bytecode a UdonBehaviour executes.
+# The compiler emits one assembly file per POU; the platform SDK's
+# assembler compiles that to the bytecode a world behaviour executes.
 #
 # Format: one entry per line. `#` starts a comment. Every opcode
 # entry gives its mnemonic and the operand shape the assembler
@@ -28,7 +27,7 @@
 
 # ---- Data section directives (inside .data_start/.data_end) ---
 
-.export <symbol>                         # mark a symbol as exported (visible to Udon)
+.export <symbol>                         # mark a symbol as exported (visible to the VM)
 .sync <symbol>, none                     # no network sync
 .sync <symbol>, linear                   # linear interpolation sync
 .sync <symbol>, smooth                   # smooth interpolation sync
@@ -38,7 +37,7 @@
 .export <method_address>                 # exported method entry
 <method_address>:                        # label at an entry address
 
-# ---- Opcodes (from UdonSharp's InstructionKind enum) ----------
+# ---- Opcodes (from the compiler's InstructionKind enum) ----------
 # Each instruction is 4 bytes wide unless noted; comments are 0.
 
 NOP                                      # do nothing
@@ -48,7 +47,7 @@ COPY                                     # pop two, write top into second's slot
 JUMP, 0x<addr>                           # unconditional 32-bit jump
 JUMP_IF_FALSE, 0x<addr>                  # pop; jump if the boolean is false
 JUMP_INDIRECT, <symbol>                  # jump to the address stored in the symbol
-EXTERN, "<extern_signature>"             # call a VRChat-registered extern
+EXTERN, "<extern_signature>"             # call a platform-registered extern
 EXTERN_SET, "<extern_signature>"         # set-shape extern (host writes a slot)
 EXTERN_GET, "<extern_signature>"         # get-shape extern (host reads a slot)
 RETURN                                   # return from the current export

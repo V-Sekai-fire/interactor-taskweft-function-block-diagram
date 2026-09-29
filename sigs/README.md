@@ -21,10 +21,10 @@ Files here today:
 | file                             | rung | source                                                                       |
 | -------------------------------- | ---- | ---------------------------------------------------------------------------- |
 | `godot_sandbox_syscalls.sigs`    | full | libriscv/godot-sandbox `src/syscalls.h` (MIT)                                |
-| `world_vm_asm.sigs`              | full | vrchat-community/UdonSharp `AssemblyInstruction.cs` + `AssemblyModule.cs` (MIT) |
+| `world_vm_asm.sigs`              | full | the world-scripting VM's C# compiler, `AssemblyInstruction.cs` + `AssemblyModule.cs` (MIT) |
 | `godot_engine_single.sigs`       | 0 index | **not** the source of truth — Sandbox's `generate_api("cpp",...)` is; run `mix godot.dump_api` |
 | `godot_engine_double.sigs`       | 0 index | same, double-precision `real_t` sibling                                       |
-| `udon_extern.sigs`               | 0    | vrchat-community/UdonSharp extern resolver + UdonManager runtime (MIT)        |
+| `world_vm_extern.sigs`           | 0    | the world-scripting VM's C# compiler extern resolver + runtime registry (MIT)  |
 | `gltf_interactivity.sigs`        | 0    | KhronosGroup/glTF `extensions/2.0/Khronos/KHR_interactivity` (Khronos)        |
 | `resonite_protoflux.sigs`        | 0    | Resonite official reference: `wiki.resonite.com` ProtoFlux node list (CC-BY) |
 | `threejs.sigs`                   | 0    | mrdoob/three.js `docs/api/en/` (MIT)                                          |
@@ -35,7 +35,7 @@ Files here today:
 
 ## Two roles of a `.sigs` here
 
-Some rows above (both Udon files, the sandbox syscalls) are the
+Some rows above (both world-VM files, the sandbox syscalls) are the
 **source of truth** — nothing upstream generates them, so this repo
 maintains them by hand from the upstream sources they cite. Others
 (both godot engine files today) are **indices** — the upstream ships
@@ -48,6 +48,7 @@ gate refuses a `.sigs` marked "not source of truth" whose entries do
 not appear in the corresponding generated header, and refuses a
 generator run whose header omits a rung-0 entry the `.sigs` names.
 
-**Trademark note.** These are interop surfaces; the platform each file
-targets is named because the file has no meaning without the name.
-Same pattern as the two full-surface files above. No marketing copy.
+**Trademark note.** The two world-VM files describe their surface
+generically, in their names and prose, not by the platform's mark. Extern and type strings a
+runtime binds stay verbatim, because they are data the target
+matches byte for byte.

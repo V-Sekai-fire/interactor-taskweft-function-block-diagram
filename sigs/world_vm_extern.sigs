@@ -1,13 +1,13 @@
-# VRChat Udon extern surface — the OTHER HALF of `world_vm_asm.sigs`.
+# World-scripting VM extern surface — the OTHER HALF of `world_vm_asm.sigs`.
 #
-# Rung 0: the extern signatures a rung-0 FBD-to-Udon emitter names in
+# Rung 0: the extern signatures a rung-0 FBD-to-VM emitter names in
 # EXTERN / EXTERN_GET / EXTERN_SET operands to reach the world. The
-# uasm side has the opcodes; this side has the strings those opcodes
+# assembly side has the opcodes; this side has the strings those opcodes
 # pass to the runtime's extern resolver.
 #
-# Source: vrchat-community/UdonSharp (MIT) — extern signatures are
-# resolved through `UdonSharp.Compiler.Binder.BindContext` against
-# VRChat's `UdonManager` at runtime. Signatures are stringly-typed:
+# Source: the platform's MIT-licensed C#-to-VM compiler — extern
+# signatures are resolved through its binder against the platform
+# runtime's extern registry. Signatures are stringly-typed:
 # `<Namespace>.<Type>.<__Method>_<argTypes>_<retType>`. This file
 # names the shape and gives the rung-0 subset our emitter uses.
 #
@@ -15,7 +15,7 @@
 
 # ---- signature grammar --------------------------------------------
 # `<Ns>.<Type>.__<Method>__<ArgType1>_<ArgType2>__<RetType>`
-# Namespaces we hit: UnityEngine, VRC.SDKBase, VRC.Udon.Common
+# Namespaces we hit: the engine's, and the platform SDK's base and common ones.
 # Void return is written as `__SystemVoid`.
 
 # ---- state observation (drives RFD 2149 done-flag polling) --------
@@ -35,7 +35,7 @@ UnityEngineTransform.__get_rotation__UnityEngineQuaternion                      
 UnityEngineTransform.__set_rotation__UnityEngineQuaternion__SystemVoid                      # SET   world rotation
 UnityEngineTransform.__get_localScale__UnityEngineVector3                                   # GET
 
-# ---- math (host-side, called via extern rather than uasm ops) -----
+# ---- math (host-side, called via extern rather than VM ops) -----
 
 UnityEngineVector3.__ctor__SystemSingle_SystemSingle_SystemSingle__UnityEngineVector3       # CALL  Vec3(x,y,z)
 UnityEngineVector3.__op_Addition__UnityEngineVector3_UnityEngineVector3__UnityEngineVector3
@@ -50,7 +50,7 @@ UnityEngineTime.__get_deltaTime__SystemSingle                                   
 UnityEngineTime.__get_fixedDeltaTime__SystemSingle                                          # GET
 UnityEngineTime.__get_time__SystemSingle                                                    # GET
 
-# ---- VRChat-only (players, networking, ownership) -----------------
+# ---- platform-only (players, networking, ownership) ---------------
 
 VRCSDKBaseVRCPlayerApi.__get_LocalPlayer__VRCSDKBaseVRCPlayerApi                            # GET
 VRCSDKBaseVRCPlayerApi.__IsOwner__VRCSDKBaseVRCPlayerApi_UnityEngineGameObject__SystemBoolean
@@ -64,7 +64,7 @@ UnityEngineInput.__GetKey__UnityEngineKeyCode__SystemBoolean                    
 UnityEngineInput.__GetAxis__SystemString__SystemSingle                                      # CALL
 
 # ---- rule for the emitter -----------------------------------------
-# Every extern string above is a slot the UdonManager binds at world-
+# Every extern string above is a slot the platform runtime binds at world-
 # load time. An unknown signature is a load-time reject (the world
 # refuses to start); the emitter validates against this file at
-# compile time so an unknown one fails at .uasm build, not at upload.
+# compile time so an unknown one fails at assembly build, not at upload.

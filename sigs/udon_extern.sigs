@@ -1,4 +1,4 @@
-# VRChat Udon extern surface — the OTHER HALF of `vrchat_udon_asm.sigs`.
+# VRChat Udon extern surface — the OTHER HALF of `world_vm_asm.sigs`.
 #
 # Rung 0: the extern signatures a rung-0 FBD-to-Udon emitter names in
 # EXTERN / EXTERN_GET / EXTERN_SET operands to reach the world. The

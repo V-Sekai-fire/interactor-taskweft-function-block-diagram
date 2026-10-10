@@ -17,4 +17,4 @@ lake exe taskweft_fbd_compiler check <diagram>
 
 ## Licence
 
-MIT OR Apache-2.0, as the source files' SPDX headers state; there is no licence file.
+MIT. See [LICENSE](LICENSE).

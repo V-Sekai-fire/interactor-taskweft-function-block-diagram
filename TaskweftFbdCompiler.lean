@@ -1,5 +1,5 @@
 /-
-RFD 2152 stage 1: FBD AST covering the IEC 61131-3 standard block
+RFD66606-2152 stage 1: FBD AST covering the IEC 61131-3 standard block
 library. Stage 2+ adds the RISC-V emit for each block; stage 3 adds
 mathlib and the `compile_correct` theorem tying the emit to the
 FBD scan semantics in `TaskweftFbdCompiler.Semantics`.
@@ -38,7 +38,7 @@ structure Variable where
 /-- Every IEC 61131-3 standard function block the emitter needs a
     template for. Stage 1 lists them all; the emit stubs in
     `TaskweftFbdCompiler.Riscv` cover SR_L / AND / MOVE / TON and
-    refuse the rest with a pointer at RFD 2152 stage 4. -/
+    refuse the rest with a pointer at RFD66606-2152 stage 4. -/
 inductive Block where
   -- bistables
   | sr_l | rs | sr
@@ -56,7 +56,7 @@ inductive Block where
   | eq | ne | lt | gt | le | ge
   -- edges
   | f_trig | r_trig
-  -- operating-system callables the host performs (RFD 2157's callable syscall)
+  -- operating-system callables the host performs (RFD66606-2157's callable syscall)
   | os_write | os_run | os_read
   -- a call into a signature table (`sigs/*.sigs`): the instance slot names the
   -- signature, the pins are its arguments plus TARGET, the host performs it

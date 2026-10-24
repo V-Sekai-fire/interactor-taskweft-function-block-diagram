@@ -3,13 +3,13 @@
 # `build_gdscript_elf.yml` (BSD-3-Clause; recipe reused with
 # attribution) so the sandbox_api runtime shim, linker flags, and
 # artifact shape match `gdscript.elf` byte-for-byte in the parts
-# libriscv reads. See RFD 2153.
+# libriscv reads. See RFD66606-2153.
 #
 # Today the compiler body is a C++ placeholder (riscv_ci/main.cpp).
 # It swaps for Lean-emitted C once either:
 #   - upstream RFC leanprover/lean4#12655 lands (native riscv64-linux),
 #   - or a workspace-local port of Lean's runtime to riscv64-linux-gnu
-#     lands (RFD 2153 stage 3).
+#     lands (RFD66606-2153 stage 3).
 # The CI shape here does not change either way.
 
 name: Build FBD Compiler ELF

@@ -1,5 +1,5 @@
 /-
-RFD 2152 stage 2 (planned): RISC-V assembly emit per FBD block.
+RFD66606-2152 stage 2 (planned): RISC-V assembly emit per FBD block.
 
 Stage 1 defines the syscall constants that match godot-sandbox's
 `gdscript.elf` ABI so the emitter's later body can reference them

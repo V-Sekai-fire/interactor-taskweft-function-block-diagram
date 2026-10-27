@@ -16,7 +16,7 @@ program lifted back (`.sgd`, `.gd`).
 
 Any mode takes `--sigs <dir>` to choose the signature tables, which is the job's
 own argument rather than an environment variable a caller has to remember.
-  taskweft_fbd_compiler                             write hello.elf (RFD 2153 stage 0)
+  taskweft_fbd_compiler                             write hello.elf (RFD66606-2153 stage 0)
 
 A refusal exits 1 with the reason on stderr, so a dataset writer or a door can
 tell a diagram that does not parse from one that parses and lowers to nothing.

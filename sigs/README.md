@@ -1,6 +1,6 @@
 # `sigs/` — target surface areas, laddered
 
-One file per external surface the FBD compiler (RFD 2154 / 2148 / 2155)
+One file per external surface the FBD compiler (RFD66606-2154 / 2148 / 2155)
 emits into. Same convention as `2-contract/bus/iceoryx2.sigs`: one
 declaration per line, `#` for comments, feeds a code generator that
 produces the dispatch stubs each emitter links against.
@@ -12,7 +12,7 @@ subsets of one surface; a higher rung is a superset of a lower one.
   to walk a hand-authored FBD network end to end on the target.
 - **Rung 1** — the subset `Taskweft.OpenPLC.PLCopen.emit/1` produces
   today (SR_L / AND / OR / NOT / MOVE / TON) reaches on the target.
-  What the RFD 2154 differential covers.
+  What the RFD66606-2154 differential covers.
 - **Rung 2** — the standard block library the parser accepts.
   Deferred until the emitter body lands.
 

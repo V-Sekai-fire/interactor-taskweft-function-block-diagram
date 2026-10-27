@@ -1,5 +1,5 @@
 /-
-RFD 2153 stage 1: write a RISC-V ELF64 with the sections Godot
+RFD66606-2153 stage 1: write a RISC-V ELF64 with the sections Godot
 Sandbox's loader requires (`.text`, `.symtab`, `.strtab`,
 `.shstrtab`, plus SHN_UNDEF). Emitted verbatim from Lean, no
 external assembler or linker.

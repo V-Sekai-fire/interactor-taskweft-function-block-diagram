@@ -1,5 +1,5 @@
 /-
-RFD 2152 stage 2 parser: PLCopen XML -> FBD AST.
+RFD66606-2152 stage 2 parser: PLCopen XML -> FBD AST.
 
 A small element tree is read from the text (tags, attributes, text, entities;
 comments and declarations skipped), then walked into a `POU`. The subset is the

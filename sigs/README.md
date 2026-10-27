@@ -32,6 +32,7 @@ Files here today:
 | `openusd.sigs`                   | 0    | PixarAnimationStudios/OpenUSD `pxr/usd/{sdf,usd,usdShade}` public API (TOST-Apache-2.0) |
 | `mujoco.sigs`                    | 0    | google-deepmind/mujoco MJCF XML schema + Python bindings (Apache-2.0)         |
 | `mitsuba3.sigs`                  | 0    | mitsuba-renderer/mitsuba3 scene XML + Python API (BSD-3)                      |
+| `stroke_program.sigs`            | full | `2-contract/drawing-lean` Lean spec (MIT) — the proven stroke packet/stream codec
 
 ## Two roles of a `.sigs` here
 

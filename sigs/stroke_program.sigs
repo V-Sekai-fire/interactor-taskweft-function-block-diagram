@@ -1,0 +1,34 @@
+# Stroke program — the compact animation blob the Blender encoder emits and
+# the RISC-V guest executes over ENet. Rung 0 of the stroked-drawing surface:
+# the wire format for integer channels (tip x/y/z, press depth, tilt, side,
+# time step), zigzag-delta-encoded per channel and packed into fixed-size
+# 512-bit packets with a keyframe every N rows.
+#
+# SOURCE OF TRUTH — the Lean spec in `2-contract/drawing-lean` is the
+# acceptance criteria. The theorems the stub generator must make hold:
+#   packet_roundtrip, run_conserves, same_packets_same_order, heals_within.
+#
+# Format: one declaration per line, `#` comments, `Class.method(args) -> Ret`.
+# The same role as `godot_sandbox_syscalls.sigs` (guest ECALLs) and
+# `cloth_fit_usd.sigs`/`weftfit_retarget.sigs` (C ABI the host links).
+#
+# ---- zigzag deltas ---------------------------------------------------
+StrokeCodec.zig(x) -> Nat                          # zigzag delta to a natural code
+StrokeCodec.unzig(n) -> Int                        # code back to a signed delta
+StrokeCodec.encode(n, c, prev, ss) -> Packet       # up to `n` samples after prev into a 512-bit packet
+StrokeCodec.decode(prev, k) -> List (List Int)     # packets into the same samples, bit for bit
+
+# ---- keyframe row codec (N rows = 1 keyframe) -------------------------
+StrokeChain.encRows(N, i, p, rows) -> List Nat     # keyframe row = absolute, else delta from previous row
+StrokeChain.decRows(N, c, i, p, codes) -> List (List W)   # rebuild the rows, keyframe row resets prev
+
+# ---- self-healing (row i % N == 0 => prev ignored) --------------------
+StrokeHeal.encKF(N, c, i, p, ss) -> List (List Nat)  # encode rows against zero at keyframes
+StrokeHeal.decKF(N, c, i, p, rows) -> List (List Int)  # decode; prev ignored at keyframe rows
+
+# ---- ordering (co-presence: HLC + pen stamp) --------------------------
+# A packet's stamp is the fabric HLC advance plus a unique pen id; stamps
+# are strictly increasing per pen. Clients holding the same packets apply
+# them in the same order whatever order they arrived in.
+StrokeOrder.stamp(clock, pen) -> Stamp             # stamp a packet: HLC advance + pen id
+StrokeOrder.applyOrder(packets) -> packets         # mergeSort by stamp; same multiset, always ordered

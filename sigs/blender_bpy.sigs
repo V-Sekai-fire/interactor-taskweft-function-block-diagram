@@ -84,3 +84,41 @@ Material.node_tree: ShaderNodeTree
 # export the deliverable via `bpy.ops.export_scene.gltf` with pure-
 # data settings (skin + morphs, no constraints/modifiers/drivers) so
 # the export matches CLAUDE.md's "pure data only" glTF rule.
+
+# ---- rung 1: the 5 plugin MVP surface --------------------------------
+# Covers the ops the 5 MVP authoring modules reach: file I/O + workfile
+# state, object lifecycle, collections, and the context/view-viewport
+# reads the glue performs. Same format as rung 0: `<member> -> <return>`
+# for context/data members, `<member>(<args>) -> <return>` for ops.
+
+# ---- file I/O + workfile state ----------------------------------------
+bpy.ops.wm.open_mainfile(filepath) -> None
+bpy.ops.wm.save_as_mainfile(filepath, compress) -> None
+bpy.ops.wm.usd_export(filepath, selected_objects_only, root_prim_path) -> None
+bpy.data.filepath -> str                                # current scene path, "" if unsaved
+bpy.data.is_dirty -> bool                               # unsaved-changes flag
+bpy.ops.cachefile.open(filepath) -> None                 # reopen a cached file by path
+
+# ---- object lifecycle ---------------------------------------------------
+bpy.data.objects.new() -> Object                          # fresh empty object
+bpy.data.objects.remove(obj) -> None                      # delete an object
+bpy.ops.object.mode_set(mode, all_objects) -> None        # mode: select/edit/vertex/...
+bpy.ops.object.select_all(action) -> None                # action: select/deselect
+bpy.ops.mesh.primitive_cube_add(location, size) -> Object
+
+# ---- collections ---------------------------------------------------------
+bpy.data.collections.new(name) -> Collection              # fresh collection
+bpy.data.collections.remove(collection) -> None           # delete a collection
+Collection.children.link(obj) -> None                     # attach to a collection
+Collection.objects.link(obj) -> None                      # attach an object
+Collection.objects.get(name) -> Object | None             # fetch by name
+Collection.objects.remove(obj) -> None
+
+# ---- context + viewport ----------------------------------------------------
+bpy.context -> Context                                      # active scene/selection/window
+bpy.context.scene -> Scene                                  # current scene
+bpy.context.view_layer.objects.active -> Object | None      # active viewport object
+bpy.context.view_layer.objects.link(obj) -> None            # make an object renderable
+bpy.context.preferences -> Preferences                      # load UI / file paths
+bpy.context.temp_override(key, value) -> None              # scoped context override
+bpy.context.window -> Window
